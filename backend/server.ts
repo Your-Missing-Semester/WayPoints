@@ -1,10 +1,7 @@
 import express, { Request, Response } from 'express';
+import { authRouter } from './routes/auth';
 import morgan from 'morgan';
 import cors from 'cors';
-import { authRouter } from './routes/auth';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
 
 export const app = express();
 
