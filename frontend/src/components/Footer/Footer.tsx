@@ -1,48 +1,37 @@
 import { Link } from 'react-router-dom';
-import styles from './Footer.module.css';
 import logoPlaceHolder from '../../assets/logoPlaceHolder.png';
 
 const Footer: React.FC = () => {
   return (
-    <div className="container">
+    <div className="bg-[#c8b1e4] fixed left-0 bottom-0 w-full p-6">
       <footer>
         <div>
-          <img src={logoPlaceHolder} alt="logo" />
+          <img src={logoPlaceHolder} alt="logo" className="w-12 h-auto mb-2" />
         </div>
-        <div className={styles['footer-info-container']}>
+        <div className="flex justify-between">
           <div>
             <Link
               to="/terms-of-service"
-              className={styles['footer-text']}
-              id={styles.tos}
+              className="text-sm mr-1 hover:text-[#9b72cf]"
             >
               Terms of Service
             </Link>
-            <span className={styles['vertical-bar']}>|</span>
-            <span>
-              <Link
-                to="/privacy-policy"
-                className={styles['footer-text']}
-                id={styles.pp}
-              >
-                Privacy Policy
-              </Link>
-            </span>
-            <p className={styles['footer-text']}>
+            <span className="text-sm">|</span>
+            <Link
+              to="/privacy-policy"
+              className="text-sm ml-1 hover:text-[#9b72cf]"
+            >
+              Privacy Policy
+            </Link>
+            <p className="text-sm">
               Copyright &copy; 2024 WayPoints | All Rights Reserved
             </p>
           </div>
           <div>
-            <Link
-              to="/contact-us"
-              className={styles['footer-text']}
-              id={styles.contact}
-            >
+            <Link to="/contact-us" className="text-sm hover:text-[#9b72cf]">
               Contact Us
             </Link>
-            <p className={styles['footer-text']}>
-              Business Inquiries | help@waypoints.me
-            </p>
+            <p className="text-sm">Business Inquiries | help@waypoints.me</p>
           </div>
         </div>
       </footer>
