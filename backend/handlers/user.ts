@@ -29,7 +29,7 @@ const doesEmailExistInDatabase = async (
     },
   });
   if (user) {
-    res.json({
+    res.status(400).json({
       message:
         'This email address is already associated with an account. Please try signing in or using a different email address',
     });
