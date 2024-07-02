@@ -4,8 +4,15 @@ const ResetPassword: React.FC = () => {
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [emailMatchError, setEmailMatchError] = useState<string | null>(null);
 
   // TODO: create a function that checks if the two passwords entered match upon submit and call that function in the handleResetPasswordFormSubmit function
+  const getEmailMatchErrorIfExists = (): string | null => {
+    if (newPassword !== confirmNewPassword) {
+      return 'Passwords do not match.';
+    }
+    return null;
+  };
 
   const getPasswordValidationErrorIfExists = (
     password: string
@@ -33,10 +40,18 @@ const ResetPassword: React.FC = () => {
   ): Promise<void> => {
     e.preventDefault();
 
-    const error = getPasswordValidationErrorIfExists(newPassword);
-    setPasswordError(error);
+    const emailError = getEmailMatchErrorIfExists();
+    setEmailMatchError(emailError);
+
+    const passwordError = getPasswordValidationErrorIfExists(newPassword);
+    setPasswordError(passwordError);
 
     // TODO: Update the users password in the backend
+    const response = await fetch('/api/reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ newPassword }),
+    });
   };
 
   return (
@@ -49,6 +64,7 @@ const ResetPassword: React.FC = () => {
               {passwordError}
             </p>
           )}
+
           <label>
             New Password<span className="text-red-500">*</span>
           </label>
@@ -68,6 +84,11 @@ const ResetPassword: React.FC = () => {
             value={confirmNewPassword}
             onChange={handleConfirmNewPasswordChange}
           />
+          {emailMatchError && (
+            <p className="mt-4 rounded-md p-4 bg-red-200 text-sm">
+              {emailMatchError}
+            </p>
+          )}
 
           <button
             type="submit"
