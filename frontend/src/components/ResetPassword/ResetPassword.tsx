@@ -9,7 +9,7 @@ const ResetPassword: React.FC = () => {
   // TODO: create a function that checks if the two passwords entered match upon submit and call that function in the handleResetPasswordFormSubmit function
   const getEmailMatchErrorIfExists = (): string | null => {
     if (newPassword !== confirmNewPassword) {
-      return 'Passwords do not match.';
+      return 'Passwords do not match';
     }
     return null;
   };
