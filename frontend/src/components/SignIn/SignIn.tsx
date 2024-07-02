@@ -19,7 +19,7 @@ const SignIn: React.FC = () => {
     e.preventDefault();
 
     // TODO (T41) : Make sure to come back here after the sign in function is written in the backend and sends a response and then process the response and throw any errors if necessary.
-    const response = await fetch('/api/sign-in', {
+    const response = await fetch('/api/auth/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
