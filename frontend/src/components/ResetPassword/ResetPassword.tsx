@@ -6,7 +6,6 @@ const ResetPassword: React.FC = () => {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [emailMatchError, setEmailMatchError] = useState<string | null>(null);
 
-  // TODO: create a function that checks if the two passwords entered match upon submit and call that function in the handleResetPasswordFormSubmit function
   const getEmailMatchErrorIfExists = (): string | null => {
     if (newPassword !== confirmNewPassword) {
       return 'Passwords do not match';
@@ -46,7 +45,6 @@ const ResetPassword: React.FC = () => {
     const passwordError = getPasswordValidationErrorIfExists(newPassword);
     setPasswordError(passwordError);
 
-    // TODO: Update the users password in the backend
     const response = await fetch('/api/auth/reset-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
