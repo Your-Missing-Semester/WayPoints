@@ -1,20 +1,44 @@
 import { Request, Response } from 'express';
-import prisma from '../utils/prismaClient';
 import { getHashedPlusSaltedPassword } from '../modules/auth';
+import prisma from '../utils/prismaClient';
 
+// sign up
 export const createNewUser = async (req: Request, res: Response) => {
-  const user = await prisma.user.create({
-    data: {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: await getHashedPlusSaltedPassword(req.body.password),
-    },
-  });
+  const emailExists: boolean = await doesEmailExistInDatabase(req, res);
+
+  if (!emailExists) {
+    await prisma.user.create({
+      data: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: await getHashedPlusSaltedPassword(req.body.password),
+      },
+    });
+    res.status(201).json({ message: 'User successfully created' });
+  }
 };
 
-// we need to also check if the email is already stored in the database or not
+const doesEmailExistInDatabase = async (
+  req: Request,
+  res: Response
+): Promise<boolean> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email: req.body.email,
+    },
+  });
+  if (user) {
+    res.json({
+      message:
+        'This email address is already associated with an account. Please try signing in or using a different email address',
+    });
+    return true;
+  }
+  return false;
+};
 
+// sign in
 export const validateSignIn = async (req: Request, res: Response) => {
   /*
   Once we establish our database:
