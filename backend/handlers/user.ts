@@ -3,7 +3,6 @@ import { getHashedPlusSaltedPassword } from '../modules/auth';
 import prisma from '../utils/prismaClient';
 import { SessionData } from '../utils/types';
 
-// sign up
 export const createNewUser = async (req: Request, res: Response) => {
   const emailExists: boolean = await doesEmailExistInDatabase(req, res);
 
