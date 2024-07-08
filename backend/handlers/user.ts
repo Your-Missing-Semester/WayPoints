@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getHashedPlusSaltedPassword } from '../modules/auth';
 import prisma from '../utils/prismaClient';
+import { SessionData } from '../utils/types';
 
 // sign up
 export const createNewUser = async (req: Request, res: Response) => {
@@ -15,6 +16,7 @@ export const createNewUser = async (req: Request, res: Response) => {
         password: await getHashedPlusSaltedPassword(req.body.password),
       },
     });
+    req.session.isAuth = true;
     res.status(201).json({ message: 'User successfully created' });
   }
 };
