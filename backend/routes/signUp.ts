@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { checkSchema, Schema } from 'express-validator';
-import { handleSignUp } from '../handlers/signUp';
+import { createNewUser } from '../handlers/user';
 import { handleInputErrors } from '../modules/middlewares';
 
 export const signUpRouter = Router();
@@ -33,5 +33,5 @@ signUpRouter.post(
   '/',
   checkSchema(signUpSchema),
   handleInputErrors,
-  handleSignUp
+  createNewUser
 );
